@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.overcontrol1.randomfishing.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinLootTable"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

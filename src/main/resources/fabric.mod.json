@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "randomfishing",
+	"version": "${version}",
+	"name": "RandomFishing",
+	"description": "Adds an enchantment that makes fishing able to give any random item.",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/randomfishing/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.overcontrol1.randomfishing.RandomFishing"
+		],
+		"client": [
+			"com.overcontrol1.randomfishing.RandomFishingClient"
+		]
+	},
+	"mixins": [
+		"randomfishing.mixins.json",
+		{
+			"config": "randomfishing.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.2",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
