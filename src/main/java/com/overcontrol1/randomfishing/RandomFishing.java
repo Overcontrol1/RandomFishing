@@ -23,7 +23,7 @@ public class RandomFishing implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Random Fishing installed. Fishing loot tables will be completely random.");
+		LOGGER.info("Random Fishing successfully installed. ");
 
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "random_fishing"), ENCHANTMENT);
 	}

@@ -17,9 +17,6 @@
 	"entrypoints": {
 		"main": [
 			"com.overcontrol1.randomfishing.RandomFishing"
-		],
-		"client": [
-			"com.overcontrol1.randomfishing.RandomFishingClient"
 		]
 	},
 	"mixins": [
@@ -31,7 +28,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.15.2",
-		"minecraft": "~1.20.4",
+		"minecraft": "~1.20",
 		"java": ">=17",
 		"fabric-api": "*"
 	},

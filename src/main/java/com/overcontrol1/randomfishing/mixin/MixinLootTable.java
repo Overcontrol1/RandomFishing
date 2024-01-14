@@ -7,11 +7,14 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.PotionItem;
+import net.minecraft.item.TippedArrowItem;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextType;
 import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.World;
@@ -46,6 +49,10 @@ public class MixinLootTable {
         Item item = Registries.ITEM.getRandom(world.random).map(RegistryEntry.Reference::value).orElse(null);
         assert item != null;
         ItemStack stack = new ItemStack(item, world.random.nextBetween(1, item.getMaxCount()));
+
+        if (item instanceof PotionItem || item instanceof TippedArrowItem) {
+            PotionUtil.setPotion(stack, Registries.POTION.getRandom(world.random).map(RegistryEntry.Reference::value).orElse(null));
+        }
 
         return ObjectArrayList.of(stack);
     }
