@@ -20,11 +20,7 @@
 		]
 	},
 	"mixins": [
-		"randomfishing.mixins.json",
-		{
-			"config": "randomfishing.client.mixins.json",
-			"environment": "client"
-		}
+		"randomfishing.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.15.2",
