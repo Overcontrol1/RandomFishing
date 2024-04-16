@@ -29,20 +29,17 @@ public class MixinLootTable {
 
     @ModifyReturnValue(method = "generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;", at = @At("RETURN"))
     public ObjectArrayList<ItemStack> randomfishing$overrideFishingLootIfEnchantmentPresent(ObjectArrayList<ItemStack> original, LootContextParameterSet parameterSet) {
-        if (this.type != LootContextTypes.FISHING) {
+        if (this.type != LootContextTypes.FISHING)
             return original;
-        }
 
         ItemStack usedItem = parameterSet.getOptional(LootContextParameters.TOOL);
         Entity bobberEntity = parameterSet.getOptional(LootContextParameters.THIS_ENTITY);
 
-        if (usedItem == null || bobberEntity == null) {
+        if (usedItem == null || bobberEntity == null)
             return original;
-        }
 
-        if (EnchantmentHelper.getLevel(RandomFishing.ENCHANTMENT, usedItem) < 1) {
+        if (EnchantmentHelper.getLevel(RandomFishing.ENCHANTMENT, usedItem) < 1)
             return original;
-        }
 
         World world = bobberEntity.getWorld();
 
@@ -50,9 +47,8 @@ public class MixinLootTable {
         assert item != null;
         ItemStack stack = new ItemStack(item, world.random.nextBetween(1, item.getMaxCount()));
 
-        if (item instanceof PotionItem || item instanceof TippedArrowItem) {
+        if (item instanceof PotionItem || item instanceof TippedArrowItem)
             PotionUtil.setPotion(stack, Registries.POTION.getRandom(world.random).map(RegistryEntry.Reference::value).orElse(null));
-        }
 
         return ObjectArrayList.of(stack);
     }
