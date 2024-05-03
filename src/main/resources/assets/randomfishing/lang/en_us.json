@@ -1,3 +1,4 @@
 {
-  "enchantment.randomfishing.random_fishing": "Random Fishing"
+  "enchantment.randomfishing.random_fishing": "Random Fishing",
+  "gamerule.randomFishingMaxCount": "Random Fishing: Max Count"
 }

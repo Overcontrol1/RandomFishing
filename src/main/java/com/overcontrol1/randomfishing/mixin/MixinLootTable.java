@@ -45,7 +45,7 @@ public class MixinLootTable {
 
         Item item = Registries.ITEM.getRandom(world.random).map(RegistryEntry.Reference::value).orElse(null);
         assert item != null;
-        ItemStack stack = new ItemStack(item, world.random.nextBetween(1, item.getMaxCount()));
+        ItemStack stack = new ItemStack(item, world.random.nextBetween(1, Math.min(item.getMaxCount(), world.getGameRules().getInt(RandomFishing.MAX_COUNT))));
 
         if (item instanceof PotionItem || item instanceof TippedArrowItem)
             PotionUtil.setPotion(stack, Registries.POTION.getRandom(world.random).map(RegistryEntry.Reference::value).orElse(null));
