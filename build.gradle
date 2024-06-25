@@ -2,6 +2,7 @@ plugins {
 	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
 	id "me.modmuss50.mod-publish-plugin" version "0.5.1"
+	id "com.sidneysimmons.gradle-plugin-external-properties" version "2.0.1"
 }
 
 version = project.mod_version
@@ -104,17 +105,21 @@ publishMods {
 	modLoaders.add("fabric")
 	additionalFiles.from(remapSourcesJar.archiveFile)
 
+	displayName = "Random Fishing " + project.version + "-" + minecraft_version
+
 	modrinth {
-		accessToken = providers.environmentVariable("MODRINTH_KEY")
+		accessToken = props.get("MODRINTH_KEY")
 		projectId = "vEyyiUWA"
+		minecraftVersions.add(minecraft_version)
 	}
 
 	github {
-		accessToken = providers.environmentVariable("GITHUB_TOKEN")
+		accessToken = props.get("GITHUB_TOKEN")
 		repository = "Overcontrol1/RandomFishing"
 		commitish = "master"
-		tagName = "1.2.1"
+		tagName = project.version + "-" + minecraft_version
 	}
 
-	changelog = "- Split version jars"
+	changelog = "- Added data files for blacklisting individual items through tags and namespaces (mods) through a JSON. \n" +
+				"- View [this wiki page](https://minecraft.wiki/w/Tag) for information on tags. The tag is an item tag with the identifier `randomfishing:blacklist`."
 }
