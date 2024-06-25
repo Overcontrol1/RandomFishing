@@ -16,7 +16,6 @@ public class RandomFishing implements ModInitializer {
 	public static final GameRules.Key<GameRules.IntRule> MAX_COUNT = GameRuleRegistry.register("randomFishingMaxCount",
 			GameRules.Category.MISC, GameRuleFactory.createIntRule(64, 1, 64));
 
-
 	@Override
 	public void onInitialize() {
 		Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "random_fishing"), ENCHANTMENT);

@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.5-SNAPSHOT'
+	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
 	id "me.modmuss50.mod-publish-plugin" version "0.5.1"
 }
@@ -61,6 +61,13 @@ jar {
 	}
 }
 
+loom {
+	runConfigs.all {
+		ideConfigGenerated true // Run configurations are not created for subprojects by default
+		runDir "../../run" // Use a shared run folder and just create separate worlds
+	}
+}
+
 // configure the maven publication
 publishing {
 	publications {
@@ -88,20 +95,14 @@ publishMods {
 	modrinth {
 		accessToken = providers.environmentVariable("MODRINTH_KEY")
 		projectId = "vEyyiUWA"
-
-		minecraftVersionRange {
-			start = "1.20"
-			end = "1.20.4"
-		}
 	}
 
 	github {
 		accessToken = providers.environmentVariable("GITHUB_TOKEN")
 		repository = "Overcontrol1/RandomFishing"
 		commitish = "master"
-		tagName = "1.2"
+		tagName = "1.2.1"
 	}
 
-	changelog = "- Converted the mod completely to server-side using [Polymer](https://github.com/Patbox/polymer). \n" +
-				"- Fixed a bug where the enchantment could be applied to the same item multiple times."
+	changelog = "- Split version jars"
 }
