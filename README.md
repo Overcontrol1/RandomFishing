@@ -10,4 +10,5 @@ The enchantment is not compatible with Luck of the Sea.
 
 Uses [Polymer](https://github.com/Patbox/polymer) to be completely serverside, and only optional on the client.
 
+The max amount fished up can be modified with the gamerule _randomFishingMaxCount_.
 </div>
