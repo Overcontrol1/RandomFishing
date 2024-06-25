@@ -5,10 +5,7 @@ import com.overcontrol1.randomfishing.RandomFishing;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.PotionItem;
-import net.minecraft.item.TippedArrowItem;
+import net.minecraft.item.*;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
@@ -25,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(LootTable.class)
 public class MixinLootTable {
-    @Shadow @Final private LootContextType type;
+    @Shadow @Final LootContextType type;
 
     @ModifyReturnValue(method = "generateLoot(Lnet/minecraft/loot/context/LootContextParameterSet;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;", at = @At("RETURN"))
     public ObjectArrayList<ItemStack> randomfishing$overrideFishingLootIfEnchantmentPresent(ObjectArrayList<ItemStack> original, LootContextParameterSet parameterSet) {
@@ -43,8 +40,15 @@ public class MixinLootTable {
 
         World world = bobberEntity.getWorld();
 
-        Item item = Registries.ITEM.getRandom(world.random).map(RegistryEntry.Reference::value).orElse(null);
-        assert item != null;
+        final Item[] compatibleItems = Registries.ITEM.streamEntries()
+                .filter(entry -> entry.value() != Items.AIR && !RandomFishing.isBlacklisted(entry))
+                .map(RegistryEntry.Reference::value)
+                .toArray(Item[]::new);
+
+        if (compatibleItems.length == 0)
+            return original;
+
+        final Item item = compatibleItems[world.random.nextInt(compatibleItems.length)];
         ItemStack stack = new ItemStack(item, world.random.nextBetween(1, Math.min(item.getMaxCount(), world.getGameRules().getInt(RandomFishing.MAX_COUNT))));
 
         if (item instanceof PotionItem || item instanceof TippedArrowItem)

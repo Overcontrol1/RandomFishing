@@ -33,11 +33,23 @@ dependencies {
 	include modImplementation("xyz.nucleoid:server-translations-api:${project.server_translations_version}")
 }
 
+final String minecraft_version = stonecutter.current.version
+
 processResources {
 	inputs.property "version", project.version
+	inputs.property "minecraft_version", minecraft_version
+	inputs.property "polymer_version", project.property("polymer_version")
+	inputs.property "server_translations_version", project.property("server_translations_version")
+
+
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+		expand ([
+				"version": project.version,
+				"minecraft_version": minecraft_version,
+				"polymer_version": project.property("polymer_version"),
+				"server_translations_version": project.property("server_translations_version")
+		])
 	}
 }
 
