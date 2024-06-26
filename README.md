@@ -16,6 +16,8 @@ Uses [Polymer](https://modrinth.com/mod/polymer) to be completely serverside, an
 
 The max amount fished up can be modified with the gamerule _randomFishingMaxCount_.
 
+#### Additionally, the mod may be configured with a datapack: 
+
 Individual items may be blacklisted through the item tag `randomfishing:blacklist`. See [this wiki page](https://minecraft.wiki/w/Tag) for more information on tags.
 
 A modwide blacklist is available through a JSON file, found at `data/randomfishing/blacklist.json`. This file should contain only a JSON array of strings - the mod IDs of each blacklisted mod.
