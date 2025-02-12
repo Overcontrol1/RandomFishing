@@ -1,1 +1,2 @@
 * Quick fix for 1.21.1 making the enchantment translatable
+* Chinese (Simplified) language support
