@@ -1,12 +1,16 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.9-SNAPSHOT'
 	id 'maven-publish'
 	id "me.modmuss50.mod-publish-plugin" version "0.5.1"
 	id "com.sidneysimmons.gradle-plugin-external-properties" version "2.0.1"
+	id "dev.kikugie.j52j" version "1.0"
 }
 
-version = project.mod_version
+minecraft_version = stonecutter.current.version
+
+version = "${project.mod_version}-${minecraft_version}"
 group = project.maven_group
+
 
 base {
 	archivesName = project.archives_base_name
@@ -22,31 +26,24 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	
-	// Uncomment the following line to enable the deprecated Fabric API modules. 
-	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
-	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
-
-	include modImplementation("eu.pb4:polymer-core:${project.polymer_version}")
-	include modImplementation("xyz.nucleoid:server-translations-api:${project.server_translations_version}")
+	if (stonecutter.eval(minecraft_version, "<1.21")) {
+		include modImplementation("eu.pb4:polymer-core:${project.polymer_version}")
+		include modImplementation("xyz.nucleoid:server-translations-api:${project.server_translations_version}")
+	}
 }
 
-final String minecraft_version = stonecutter.current.version
 
 processResources {
-	inputs.property "version", project.version
+	inputs.property "version", project.property("mod_version")
 	inputs.property "minecraft_version", minecraft_version
 	inputs.property "polymer_version", project.property("polymer_version")
 	inputs.property "server_translations_version", project.property("server_translations_version")
 
-
-
-	filesMatching("fabric.mod.json") {
+	filesMatching("fabric.mod.json5") {
 		expand ([
-				"version": project.version,
+				"version": project.property("mod_version"),
 				"minecraft_version": minecraft_version,
 				"polymer_version": project.property("polymer_version"),
 				"server_translations_version": project.property("server_translations_version")
@@ -69,6 +66,8 @@ java {
 }
 
 jar {
+
+
 	from("LICENSE") {
 		rename { "${it}_${project.base.archivesName.get()}"}
 	}
@@ -105,7 +104,7 @@ publishMods {
 	modLoaders.add("fabric")
 	additionalFiles.from(remapSourcesJar.archiveFile)
 
-	displayName = "Random Fishing " + project.version + "-" + minecraft_version
+	displayName = "Random Fishing " + project.version
 
 	modrinth {
 		accessToken = props.get("MODRINTH_KEY")
@@ -117,9 +116,8 @@ publishMods {
 		accessToken = props.get("GITHUB_TOKEN")
 		repository = "Overcontrol1/RandomFishing"
 		commitish = "master"
-		tagName = project.version + "-" + minecraft_version
+		tagName = project.version
 	}
 
-	changelog = "- Added data files for blacklisting individual items through tags and namespaces (mods) through a JSON. \n" +
-				"- View [this wiki page](https://minecraft.wiki/w/Tag) for information on tags. The tag is an item tag with the identifier `randomfishing:blacklist`."
+	changelog = rootProject.file("CHANGELOG.md").text
 }

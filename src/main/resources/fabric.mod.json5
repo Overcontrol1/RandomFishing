@@ -27,7 +27,9 @@
 		"minecraft": "${minecraft_version}",
 		"java": ">=17",
 		"fabric-api": "*",
-		"polymer": "${polymer_version}",
-		"server-translations-api": "${server_translations_version}"
+		//? if <1.21 {
+		/*"polymer-core": "${polymer_version}",
+		"server_translations_api": "${server_translations_version}",
+		*///?}
 	}
 }

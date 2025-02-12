@@ -20,9 +20,9 @@ import java.util.concurrent.Executor;
 public final class RandomFishingDataLoader implements IdentifiableResourceReloadListener {
     public static final RandomFishingDataLoader INSTANCE = new RandomFishingDataLoader();
 
-    private static final Identifier ID = new Identifier(RandomFishing.MOD_ID, "data");
+    private static final Identifier ID = Identifier.of(RandomFishing.MOD_ID, "data");
 
-    private static final Identifier JSON_PATH = new Identifier(RandomFishing.MOD_ID, "blacklist.json");
+    private static final Identifier JSON_PATH = Identifier.of(RandomFishing.MOD_ID, "blacklist.json");
 
     private static final Set<String> MOD_BLACKLIST = new ObjectOpenHashSet<>();
 
