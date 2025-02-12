@@ -1,5 +1,7 @@
 {
-  "description": "Random Fishing",
+  "description": {
+    "translate": "enchantment.randomfishing.random_fishing"
+  },
   "exclusive_set": "minecraft:luck_of_the_sea",
   "supported_items": "#minecraft:enchantable/fishing",
   "weight": 1,
